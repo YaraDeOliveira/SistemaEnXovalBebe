@@ -1,22 +1,22 @@
 # Sistema de Enxoval de Bebe
 
 ## Projeto
-O projeto tem como objetivo auxiliar as mulheres grávidas com o inventário do enxoval do bebe incluindo a quantidade de cada peça.
-Existirá uma lista pronta padronizada para cada usuário com as quantidade de cada peça, a fim de mostrar o status se já atingiu os limites.
+O projeto tem como objetivo auxiliar as mulheres grávidas com o inventário do enxoval de seu bebê. Existirá uma lista pronta padronizada com a descrição do tipo de vestuário / item, tamanho e a quantidade ideal para se adquirir. Durante a montagem do enxoval, a usuária irá    cadastrar as peças obtidas e o sistema irá mostrar o status se para aquele item já foi obtido o que foi estabelecido como ideal ou se é necessario a obtenção de mais itens daquele tipo e tamanho.
 
 ## Tecnologia
-Será desenvolvido em .NET com o design pattern MVC e com armazenamento MySQL
+Será desenvolvido em .NET com o design pattern MVC e com armazenamento SQL Server
 
 ## Requisitos
 
 ### Cadastro da usuária
 Este dados servirá para o futuro login e contemplará os seguintes dados:
-* Nome completo*
-* Senha*
-* Email*
-* Nome no bebe
-* Sexo
-* Data prevista para o nascimento*
+Nome completo*
+Senha*
+Email*
+Nome do bebê
+Sexo do bebê
+Data prevista para o nascimento*
+
 
 ### Validação do cadastro:
 Todos os campos com o * (asterisco), deve ser obrigatório.
