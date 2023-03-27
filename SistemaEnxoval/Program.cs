@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaEnxoval.Context;
+using SistemaEnxoval.Interfaces;
+using SistemaEnxoval.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,7 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase")));
 
 
-
+builder.Services.AddTransient<IUserService, UserService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
