@@ -1,4 +1,4 @@
-﻿using SistemaEnxoval.Models;
+﻿using SistemaEnxoval.Repositories;
 
 namespace SistemaEnxoval.Interfaces
 {

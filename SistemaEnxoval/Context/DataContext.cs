@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SistemaEnxoval.Models;
+using SistemaEnxoval.Repositories;
 using System.ComponentModel.DataAnnotations;
 
 namespace SistemaEnxoval.Context

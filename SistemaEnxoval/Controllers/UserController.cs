@@ -1,19 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SistemaEnxoval.Interfaces;
+using SistemaEnxoval.Repositories;
 
 namespace SistemaEnxoval.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
-        {
-            _userService = userService;
-        }
-        public IActionResult Index()
+        public IActionResult Create()
         {
             return View();
         }
+
     }
 }

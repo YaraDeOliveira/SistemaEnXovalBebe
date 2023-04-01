@@ -1,0 +1,64 @@
+﻿@page
+@model SistemaEnxoval.Pages.User.CreateModel
+
+@{
+    ViewData["Title"] = "Registrar-se";
+}
+
+<h1>Registrar-se</h1>
+
+<hr />
+<div class="row" id="form">
+    <div class="col-md-10">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserRepository.Name" class="control-label"></label>
+                <input asp-for="UserRepository.Name" class="form-control" />
+                <span asp-validation-for="UserRepository.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserRepository.Password" class="control-label"></label>
+                <input type="password" asp-for="UserRepository.Password" class="form-control" />
+                <span asp-validation-for="UserRepository.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserRepository.Email" class="control-label"></label>
+                <input asp-for="UserRepository.Email" class="form-control" />
+                <span asp-validation-for="UserRepository.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserRepository.BabyName" class="control-label"></label>
+                <input asp-for="UserRepository.BabyName" class="form-control" />
+                <span asp-validation-for="UserRepository.BabyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserRepository.BabyGender" class="control-label"></label>
+                <select asp-for="UserRepository.BabyGender" class="form-control">
+                    <option value="">Prefiro não informar</option>
+                    <option value="F">Feminino</option>
+                    <option value="M">Masculino</option>
+                </select>
+                <span asp-validation-for="UserRepository.BabyGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserRepository.BirthForecast" class="control-label"></label>
+                <input asp-for="UserRepository.BirthForecast" class="form-control" />
+                <span asp-validation-for="UserRepository.BirthForecast" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Registrar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-page="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
