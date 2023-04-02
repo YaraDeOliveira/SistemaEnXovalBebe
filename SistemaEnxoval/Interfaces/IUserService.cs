@@ -4,6 +4,7 @@ namespace SistemaEnxoval.Interfaces
 {
     public interface IUserService
     {
-        void Create(UserRepository user);
+        Task<bool> Create(UserRepository user);
+        Task<bool> CheckEmail(string email);
     }
 }

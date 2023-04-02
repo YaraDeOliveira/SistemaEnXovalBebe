@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaEnxoval.Context;
 using SistemaEnxoval.Interfaces;
+using SistemaEnxoval.Model;
 using SistemaEnxoval.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +11,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiDatabase")));
 
-
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<SweetAlert>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,4 +1,12 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿let elementSweetAlert = document.getElementById('sweet-alert').value;
+if (elementSweetAlert !== "") {
+    let modelSweetAlert = JSON.parse(elementSweetAlert)
+    if (Boolean(modelSweetAlert.Show)) {
+        swal({
+            title: modelSweetAlert.Title,
+            text: modelSweetAlert.Text,
+            icon: modelSweetAlert.Icon,
+            button: modelSweetAlert.ButtonText,
+        });
+    }
+}

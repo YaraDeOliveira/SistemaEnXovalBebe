@@ -1,4 +1,5 @@
-﻿using SistemaEnxoval.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaEnxoval.Context;
 using SistemaEnxoval.Interfaces;
 using SistemaEnxoval.Repositories;
 
@@ -13,12 +14,30 @@ namespace SistemaEnxoval.Services
             _data = data;
         }
 
-        public void Create(UserRepository user)
+        public async Task<bool> CheckEmail(string email)
         {
             try
             {
-                _data.Add(user);
-                _data.SaveChanges();
+                var result = await _data.Users.FirstOrDefaultAsync(x => x.Email == email);
+                if (result == null)
+                    return false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> Create(UserRepository user)
+        {
+            try
+            {
+                _data.Users.Add(user);
+                var result = await _data.SaveChangesAsync();
+                if(result > 0)
+                    return true;
+                return false;
             }
             catch (Exception ex)
             {

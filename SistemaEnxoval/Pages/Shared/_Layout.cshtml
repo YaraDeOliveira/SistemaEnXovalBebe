@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SistemaEnxoval.styles.css" asp-append-version="true" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 <body>
     <header>
@@ -31,6 +33,7 @@
         </nav>
     </header>
     <div class="container">
+        <input type="hidden" id="sweet-alert" value="@ViewData["Swal"]" />
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
