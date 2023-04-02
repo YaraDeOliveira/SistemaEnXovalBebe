@@ -7,6 +7,7 @@
         public string Icon { get; set; } = "Success";
         public string ButtonText { get; set; } = "Ok";
         public bool Show { get; set; } = false;
+        public string ActionPageRedirect { get; set; } = string.Empty;
 
         public SweetAlert()
         {

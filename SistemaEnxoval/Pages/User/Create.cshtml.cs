@@ -54,6 +54,8 @@ namespace SistemaEnxoval.Pages.User
                     _alertSweetAlert.Show = true;
                     _alertSweetAlert.Text = "Email já cadastrado!";
                     _alertSweetAlert.Title = "Alerta";
+                    ViewData["Swal"] = JsonConvert.SerializeObject(_alertSweetAlert);
+                    return Page();
                 }
                 var result = await _userService.Create(UserRepository);
                 if (result)
@@ -62,7 +64,8 @@ namespace SistemaEnxoval.Pages.User
                     _alertSweetAlert.Icon = "success";
                     _alertSweetAlert.Show = true;
                     _alertSweetAlert.Text = "";
-                    _alertSweetAlert.Title = "Cadastradado com sucesso";
+                    _alertSweetAlert.Title = "Cadastrado com sucesso";
+                    _alertSweetAlert.ActionPageRedirect = "Login";
                 }
             }
             catch (Exception ex)

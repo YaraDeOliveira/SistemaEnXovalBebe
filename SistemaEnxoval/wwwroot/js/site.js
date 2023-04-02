@@ -6,7 +6,11 @@ if (elementSweetAlert !== "") {
             title: modelSweetAlert.Title,
             text: modelSweetAlert.Text,
             icon: modelSweetAlert.Icon,
-            button: modelSweetAlert.ButtonText,
+            button: modelSweetAlert.ButtonText
+        }).then((result) => {
+            if (modelSweetAlert.ActionPageRedirect !== "") {
+                window.location.href = modelSweetAlert.ActionPageRedirect;
+            }
         });
     }
 }
