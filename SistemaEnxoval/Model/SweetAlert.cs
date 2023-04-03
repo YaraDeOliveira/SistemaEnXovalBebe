@@ -9,10 +9,5 @@
         public bool Show { get; set; } = false;
         public string ActionPageRedirect { get; set; } = string.Empty;
 
-        public SweetAlert()
-        {
-
-        }
-
     }
 }

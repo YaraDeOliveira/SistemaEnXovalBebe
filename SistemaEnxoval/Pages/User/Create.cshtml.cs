@@ -49,7 +49,6 @@ namespace SistemaEnxoval.Pages.User
                 }
                 if (await _userService.CheckEmail(UserRepository.Email))
                 {
-                    _alertSweetAlert.ButtonText = "Ok";
                     _alertSweetAlert.Icon = "warning";
                     _alertSweetAlert.Show = true;
                     _alertSweetAlert.Text = "Email já cadastrado!";
@@ -60,7 +59,6 @@ namespace SistemaEnxoval.Pages.User
                 var result = await _userService.Create(UserRepository);
                 if (result)
                 {
-                    _alertSweetAlert.ButtonText = "Ok";
                     _alertSweetAlert.Icon = "success";
                     _alertSweetAlert.Show = true;
                     _alertSweetAlert.Text = "";
@@ -70,7 +68,6 @@ namespace SistemaEnxoval.Pages.User
             }
             catch (Exception ex)
             {
-                _alertSweetAlert.ButtonText = "Ok";
                 _alertSweetAlert.Icon = "error";
                 _alertSweetAlert.Show = true;
                 _alertSweetAlert.Text = ex.Message;
