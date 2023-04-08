@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaEnxoval.Context;
 using SistemaEnxoval.Interfaces;
+using SistemaEnxoval.Model;
 using SistemaEnxoval.Repositories;
 
 namespace SistemaEnxoval.Services
@@ -43,6 +44,14 @@ namespace SistemaEnxoval.Services
             {
                 throw new Exception(ex.Message);
             }
+
+        }
+
+        public async Task<bool> Login(Login login)
+        {
+            var result = await _data.Users.FirstOrDefaultAsync(x => x.Email == login.Email && x.Password == login.Password);
+            if(result != null) return true;
+            return false;
 
         }
     }

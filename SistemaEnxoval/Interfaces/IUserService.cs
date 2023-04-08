@@ -1,4 +1,5 @@
-﻿using SistemaEnxoval.Repositories;
+﻿using SistemaEnxoval.Model;
+using SistemaEnxoval.Repositories;
 
 namespace SistemaEnxoval.Interfaces
 {
@@ -6,5 +7,6 @@ namespace SistemaEnxoval.Interfaces
     {
         Task<bool> Create(UserRepository user);
         Task<bool> CheckEmail(string email);
+        Task<bool> Login(Login login);
     }
 }
