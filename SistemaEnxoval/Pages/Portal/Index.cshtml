@@ -12,6 +12,7 @@
             <th scope="col">Tamanho</th>
             <th scope="col">Quantidade Requerida</th>
             <th scope="col">Estoque</th>
+            <th scope="col">Status</th>
         </tr>
     </thead>
     <tbody>
@@ -23,7 +24,21 @@
                 <td>@item.Item.Size</td>
                 <td>@item.Item.Quantity</td>
                 <td>
-                    <input class="form-control form-control-sm" type="number" id="number-stock" value="@item.Stock" onchange="changeNumber(this, @item.Id)" aria-label=".form-control-sm example">
+                    <input class="form-control form-control-sm" type="number" id="number-stock" value="@item.Stock" onchange="changeNumber(this, @item.Id, @item.Item.Quantity)" aria-label=".form-control-sm example">
+                </td>
+                <td id="status-stock-@item.Id">
+                    @if (@item.Stock < @item.Item.Quantity)
+                    {
+                        <span class="badge bg-danger">Falta</span>
+                    }
+                    @if (@item.Stock == @item.Item.Quantity)
+                    {
+                        <span class="badge bg-success">Ok</span>
+                    }
+                    @if (@item.Stock > @item.Item.Quantity)
+                    {
+                        <span class="badge bg-primary">Ultrapassou</span>
+                    }
                 </td>
             </tr>
         }
@@ -31,7 +46,7 @@
 </table>
 
 <script>
-    function changeNumber(input, id) {
+    function changeNumber(input, id, quantity) {
         if (input.value < 0) {
             input.value = 0
             return
@@ -42,7 +57,19 @@
                 'Accept': 'application/json'
             }
         })
-        //.then(response => response.text())
-        //.then(text => console.log(text))
+            .then(function (res) {
+                var status = document.getElementById(`status-stock-${id}`)
+                if (res.ok) {
+                    if (input.value < quantity) {
+                        status.innerHTML = "<span class='badge bg-danger'>Falta</span>"
+                    }
+                    if (input.value == quantity) {
+                        status.innerHTML = "<span class='badge bg-success'>Ok</span>"
+                    }
+                    if (input.value > quantity) {
+                        status.innerHTML = "<span class='badge bg-primary'>Ultrapassou</span>"
+                    }
+                }
+            })
     }
 </script>
