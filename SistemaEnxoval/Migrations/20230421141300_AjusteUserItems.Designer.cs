@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaEnxoval.Context;
 
@@ -11,9 +12,11 @@ using SistemaEnxoval.Context;
 namespace SistemaEnxoval.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230421141300_AjusteUserItems")]
+    partial class AjusteUserItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace SistemaEnxoval.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ItemRepositoryUserRepository", b =>
-                {
-                    b.Property<int>("ItemsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ItemsId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("ItemRepositoryUserRepository");
-                });
 
             modelBuilder.Entity("SistemaEnxoval.Repositories.ItemRepository", b =>
                 {
@@ -54,7 +42,12 @@ namespace SistemaEnxoval.Migrations
                     b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserItemRepositoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserItemRepositoryId");
 
                     b.ToTable("Items");
                 });
@@ -67,20 +60,16 @@ namespace SistemaEnxoval.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ItemsId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserItem")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ItemsId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UserItems");
                 });
@@ -115,39 +104,35 @@ namespace SistemaEnxoval.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
+                    b.Property<int?>("UserItemRepositoryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserItemRepositoryId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ItemRepositoryUserRepository", b =>
+            modelBuilder.Entity("SistemaEnxoval.Repositories.ItemRepository", b =>
                 {
-                    b.HasOne("SistemaEnxoval.Repositories.ItemRepository", null)
-                        .WithMany()
-                        .HasForeignKey("ItemsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("SistemaEnxoval.Repositories.UserItemRepository", null)
+                        .WithMany("Items")
+                        .HasForeignKey("UserItemRepositoryId");
+                });
 
-                    b.HasOne("SistemaEnxoval.Repositories.UserRepository", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("SistemaEnxoval.Repositories.UserRepository", b =>
+                {
+                    b.HasOne("SistemaEnxoval.Repositories.UserItemRepository", null)
+                        .WithMany("Users")
+                        .HasForeignKey("UserItemRepositoryId");
                 });
 
             modelBuilder.Entity("SistemaEnxoval.Repositories.UserItemRepository", b =>
                 {
-                    b.HasOne("SistemaEnxoval.Repositories.ItemRepository", "Items")
-                        .WithMany()
-                        .HasForeignKey("ItemsId");
-
-                    b.HasOne("SistemaEnxoval.Repositories.UserRepository", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Items");
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

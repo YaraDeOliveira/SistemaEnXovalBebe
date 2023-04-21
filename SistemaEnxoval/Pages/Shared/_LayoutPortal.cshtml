@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var name = Context.Session.GetString("UserName");
+}
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
@@ -19,9 +23,9 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3"
              style="font-family: 'Alkatra', cursive; font-size: 20px;background-color: floralwhite;">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index" style="font-size: 30px; color: coral">
+                <a class="navbar-brand" asp-area="" asp-page="Index" style="font-size: 30px; color: coral">
                     <img src="/img/logo.jpg" alt="" width="100" height="100" class="d-inline-block align-text-center">
-                    Enxoval do Bebê 
+                    Enxoval do Bebê
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -31,7 +35,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 justify-content-end">
                         <li class="nav-item">
-                            Bem Vindo
+                            Bem Vinda(o) @name
+                        </li>
+                        <li>
+                            @Html.ActionLink(" ","Logout","User",  new object { }, new { @class = "nav-link text-dark bi bi-door-closed" })
                         </li>
                     </ul>
                 </div>

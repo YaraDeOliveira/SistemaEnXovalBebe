@@ -4,6 +4,7 @@ using SistemaEnxoval.Repositories;
 using SistemaEnxoval.Model;
 using SistemaEnxoval.Interfaces;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace SistemaEnxoval.Pages.User
 {
@@ -12,18 +13,17 @@ namespace SistemaEnxoval.Pages.User
         private readonly IUserService _userService;
         private SweetAlert _alertSweetAlert;
 
+        [BindProperty]
+        public Login Login { get; set; }
+
         public LoginModel(IUserService userService, SweetAlert alertSweetAlert)
         {
             _userService = userService;
             _alertSweetAlert = alertSweetAlert;
         }
-
-        [BindProperty]
-        public Login Login { get; set; }
-
-
         public void OnGet()
         {
+
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -35,13 +35,16 @@ namespace SistemaEnxoval.Pages.User
                     return Page();
                 }
                 var result = await _userService.Login(Login);
-                if (result == true)
+                if (result != null)
                 {
                     _alertSweetAlert.Show = true;
                     _alertSweetAlert.Text = "Acessando sua conta";
                     _alertSweetAlert.Icon = "success";
                     _alertSweetAlert.Title = "Login";
                     ViewData["Swal"] = JsonConvert.SerializeObject(_alertSweetAlert);
+                    HttpContext.Request.HttpContext.Session.SetString("UserName",result.Name);
+                    HttpContext.Request.HttpContext.Session.SetString("UserId",result.Id.ToString());
+                    HttpContext.Request.HttpContext.Session.SetString("UserLogged","true");
                     return RedirectToAction("Index", "Portal");
                 }
                 else
@@ -51,9 +54,6 @@ namespace SistemaEnxoval.Pages.User
                     _alertSweetAlert.Icon = "warning";
                     _alertSweetAlert.Title = "Login";
                 }
-
-
-               
             }
             catch (Exception ex)
             {

@@ -7,6 +7,7 @@ namespace SistemaEnxoval.Interfaces
     {
         Task<bool> Create(UserRepository user);
         Task<bool> CheckEmail(string email);
-        Task<bool> Login(Login login);
+        Task<UserRepository> Login(Login login);
+        Task IniciateItemsAsync(int userId);
     }
 }

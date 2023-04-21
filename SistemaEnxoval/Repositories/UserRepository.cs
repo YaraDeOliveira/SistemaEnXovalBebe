@@ -31,6 +31,8 @@ namespace SistemaEnxoval.Repositories
         [DataType(DataType.Date)]
         public DateTime BirthForecast { get; set; }
 
+        public ICollection<ItemRepository> Items { get; set; }
+
         public UserRepository()
         {
 

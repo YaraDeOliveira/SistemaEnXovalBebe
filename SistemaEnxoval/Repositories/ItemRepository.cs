@@ -10,6 +10,13 @@ namespace SistemaEnxoval.Repositories
         public int Quantity { get; set; }
         public string Size { get; set; }
 
-     
+        public ICollection<UserRepository> Users { get; set; }
+
+        public ItemRepository(string product, int quantity, string size)
+        {
+            Product = product;
+            Quantity = quantity;
+            Size = size;
+        }
     }
 }

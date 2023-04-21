@@ -11,7 +11,6 @@ namespace SistemaEnxoval.Context
         }
         public DbSet<UserRepository> Users { get; set; }
         public DbSet<ItemRepository> Items { get; set; }
-
-
+        public DbSet<UserItemRepository> UserItems { get; set; }
     }
 }
