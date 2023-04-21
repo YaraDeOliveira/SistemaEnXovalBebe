@@ -1,9 +1,29 @@
 ﻿@page
-@using Microsoft.AspNetCore.Http
 @model SistemaEnxoval.Pages.Portal.IndexModel
 @{
     Layout = "_LayoutPortal";
 }
 
-
-
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Tamanho</th>
+            <th scope="col">Quantidade Requerida</th>
+            <th scope="col">Estoque</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.listItems)
+        {
+            <tr>
+                <th scope="row"></th>
+                <td>@item.Item.Product</td>
+                <td>@item.Item.Size</td>
+                <td>@item.Item.Quantity</td>
+                <td>colocar quantidade</td>
+            </tr>
+        }
+    </tbody>
+</table>

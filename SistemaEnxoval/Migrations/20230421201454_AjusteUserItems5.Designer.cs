@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaEnxoval.Context;
 
@@ -11,9 +12,11 @@ using SistemaEnxoval.Context;
 namespace SistemaEnxoval.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230421201454_AjusteUserItems5")]
+    partial class AjusteUserItems5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,6 +73,9 @@ namespace SistemaEnxoval.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ItemsId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
@@ -78,7 +84,7 @@ namespace SistemaEnxoval.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId");
+                    b.HasIndex("ItemsId");
 
                     b.HasIndex("UserId");
 
@@ -137,11 +143,9 @@ namespace SistemaEnxoval.Migrations
 
             modelBuilder.Entity("SistemaEnxoval.Repositories.UserItemRepository", b =>
                 {
-                    b.HasOne("SistemaEnxoval.Repositories.ItemRepository", "Item")
+                    b.HasOne("SistemaEnxoval.Repositories.ItemRepository", "Items")
                         .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ItemsId");
 
                     b.HasOne("SistemaEnxoval.Repositories.UserRepository", "User")
                         .WithMany()
@@ -149,7 +153,7 @@ namespace SistemaEnxoval.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Item");
+                    b.Navigation("Items");
 
                     b.Navigation("User");
                 });

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaEnxoval.Context;
 
@@ -11,9 +12,11 @@ using SistemaEnxoval.Context;
 namespace SistemaEnxoval.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230421201049_AjusteUserItems4")]
+    partial class AjusteUserItems4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,18 +70,18 @@ namespace SistemaEnxoval.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ItemId")
+                    b.Property<int?>("ItemsId")
                         .HasColumnType("int");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId");
+                    b.HasIndex("ItemsId");
 
                     b.HasIndex("UserId");
 
@@ -137,19 +140,15 @@ namespace SistemaEnxoval.Migrations
 
             modelBuilder.Entity("SistemaEnxoval.Repositories.UserItemRepository", b =>
                 {
-                    b.HasOne("SistemaEnxoval.Repositories.ItemRepository", "Item")
+                    b.HasOne("SistemaEnxoval.Repositories.ItemRepository", "Items")
                         .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ItemsId");
 
                     b.HasOne("SistemaEnxoval.Repositories.UserRepository", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Item");
+                    b.Navigation("Items");
 
                     b.Navigation("User");
                 });

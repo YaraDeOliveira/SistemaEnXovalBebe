@@ -37,7 +37,7 @@ namespace SistemaEnxoval.Services
             {
                 _data.Users.Add(user);
                 var result = await _data.SaveChangesAsync();
-                if(result > 0)
+                if (result > 0)
                     return true;
                 return false;
             }
@@ -48,25 +48,14 @@ namespace SistemaEnxoval.Services
 
         }
 
-        public async Task IniciateItemsAsync(int userId)
+        
+        public async Task<bool> HasItemsAsync(int userId)
         {
             try
             {
-                var hasItems = await _data.UserItems.AnyAsync(x => x.User.Id == userId);
-                if (hasItems) return;
-                var items = await _data.Items.AsNoTracking().ToListAsync();
-                var insertItems = new List<UserItemRepository>();
-                var user = await _data.Users.FirstOrDefaultAsync(x => x.Id == userId);
-                foreach (var item in items)
-                {
-                    insertItems.Add(new UserItemRepository()
-                    {
-                        Items= item,
-                        User = user
-                    });
-                }
-                _data.UserItems.AddRange(insertItems);
-                await _data.SaveChangesAsync();
+                return await _data.UserItems
+                    .AsNoTracking()
+                    .AnyAsync(x => x.User.Id == userId);
             }
             catch (Exception ex)
             {
@@ -83,6 +72,63 @@ namespace SistemaEnxoval.Services
             }
             return null;
 
+        }
+
+        public async Task<UserRepository> GetById(int userId)
+        {
+            try
+            {
+                return await _data.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == userId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<UserItemRepository>> SetItemsAsync(UserRepository user)
+        {
+            try
+            {
+                var items = await _data.Items
+                    .AsNoTracking()
+                    .ToListAsync();
+                var insertItems = new List<UserItemRepository>();
+                foreach (var item in items)
+                {
+                    insertItems.Add(new UserItemRepository()
+                    {
+                        ItemId = item.Id,
+                        UserId = user.Id
+                    });
+                }
+                _data.UserItems.AddRange(insertItems);
+                await _data.SaveChangesAsync();
+                return await GetItemsAsync(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<IEnumerable<UserItemRepository>> GetItemsAsync(UserRepository user)
+        {
+            try
+            {
+                var result = await _data.UserItems
+                    .Include(x => x.Item)
+                    .Include(x => x.User)
+                    .AsNoTracking()
+                    .Where(x => x.User == user)
+                    .ToListAsync();
+
+            return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

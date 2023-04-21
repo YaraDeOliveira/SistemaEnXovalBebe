@@ -15,6 +15,11 @@ namespace SistemaEnxoval.Controllers
             _login = login;
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         public IActionResult Logout()
         {
             HttpContext.Request.HttpContext.Session.Remove("UserName");

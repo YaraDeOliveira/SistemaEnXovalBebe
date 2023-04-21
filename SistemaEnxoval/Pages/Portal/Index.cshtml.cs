@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SistemaEnxoval.Interfaces;
 using SistemaEnxoval.Model;
+using SistemaEnxoval.Repositories;
 
 namespace SistemaEnxoval.Pages.Portal
 {
@@ -10,6 +11,9 @@ namespace SistemaEnxoval.Pages.Portal
     {
         private readonly IUserService _userService;
         private SweetAlert _alertSweetAlert;
+        bool _islogged = false;
+        int _userId = 0;
+        public IEnumerable<UserItemRepository> listItems = null;
 
         public IndexModel(IUserService userService, SweetAlert alertSweetAlert)
         {
@@ -17,15 +21,20 @@ namespace SistemaEnxoval.Pages.Portal
             _alertSweetAlert = alertSweetAlert;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            var isLogged = bool.Parse(HttpContext.Request.HttpContext.Session.GetString("UserLogged") ?? "false");
-            if(!isLogged)
+            _userId = int.Parse(HttpContext.Request.HttpContext.Session.GetString("UserId") ?? "0");
+            _islogged = bool.Parse(HttpContext.Request.HttpContext.Session.GetString("UserLogged") ?? "false");
+            if (!_islogged && _userId == 0)
             {
                 return RedirectToAction("Index","Home");
             }
-            var userId = int.Parse(HttpContext.Request.HttpContext.Session.GetString("UserId"));
-            _userService.IniciateItemsAsync(userId);
+            var user = await _userService.GetById(_userId);
+            listItems = await _userService.GetItemsAsync(user); ;
+            if(listItems.Count() <= 0)
+            {
+                listItems = await _userService.SetItemsAsync(user);
+            }
             return Page();
         }
 
