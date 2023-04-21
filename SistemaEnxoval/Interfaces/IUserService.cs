@@ -12,5 +12,7 @@ namespace SistemaEnxoval.Interfaces
         Task<bool> HasItemsAsync(int userId);
         Task<IEnumerable<UserItemRepository>> SetItemsAsync(UserRepository user);
         Task<IEnumerable<UserItemRepository>> GetItemsAsync(UserRepository user);
+        Task<UserItemRepository> GetUserItem(int id);
+        Task<bool> ChangeStock(UserItemRepository userItem);
     }
 }

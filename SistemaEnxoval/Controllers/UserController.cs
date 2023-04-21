@@ -8,16 +8,27 @@ namespace SistemaEnxoval.Controllers
 {
     public class UserController : Controller
     {
-        private Login _login;
-
-        public UserController(Login login)
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
-            _login = login;
+            _userService = userService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToPage("/Index","Pages");
+        }
+
+        [HttpGet]
+        public IActionResult ChangeStock([FromQuery] int id, int stock)
+        {
+            var item = _userService.GetUserItem(id).Result;
+            if(item == null){
+                return NotFound();
+            }
+            item.Stock = stock;
+            var result = _userService.ChangeStock(item).Result;
+            return Ok(result);
         }
 
         public IActionResult Logout()

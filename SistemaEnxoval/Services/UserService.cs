@@ -48,7 +48,6 @@ namespace SistemaEnxoval.Services
 
         }
 
-        
         public async Task<bool> HasItemsAsync(int userId)
         {
             try
@@ -124,6 +123,36 @@ namespace SistemaEnxoval.Services
                     .ToListAsync();
 
             return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> ChangeStock(UserItemRepository userItem)
+        {
+            try
+            {
+                _data.UserItems.Update(userItem);
+                var result = await _data.SaveChangesAsync();
+                if(result > 0)
+                    return true;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public Task<UserItemRepository> GetUserItem(int id)
+        {
+            try
+            {
+                return _data.UserItems
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.Id == id);
             }
             catch (Exception ex)
             {

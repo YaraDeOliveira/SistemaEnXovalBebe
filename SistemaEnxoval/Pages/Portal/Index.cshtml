@@ -22,8 +22,27 @@
                 <td>@item.Item.Product</td>
                 <td>@item.Item.Size</td>
                 <td>@item.Item.Quantity</td>
-                <td>colocar quantidade</td>
+                <td>
+                    <input class="form-control form-control-sm" type="number" id="number-stock" value="@item.Stock" onchange="changeNumber(this, @item.Id)" aria-label=".form-control-sm example">
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+<script>
+    function changeNumber(input, id) {
+        if (input.value < 0) {
+            input.value = 0
+            return
+        }
+
+        fetch(`User/ChangeStock?id=${id}&stock=${input.value}`, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        //.then(response => response.text())
+        //.then(text => console.log(text))
+    }
+</script>
