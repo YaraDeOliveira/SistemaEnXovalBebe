@@ -16,13 +16,22 @@ namespace SistemaEnxoval.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToPage("/Index","Pages");
+            var logged = bool.Parse(HttpContext.Request.HttpContext.Session.GetString("UserLogged") ?? "false");
+            if (!logged)
+                return RedirectToPage("/Index","Pages");
+            return View();
         }
 
         [HttpGet]
         public IActionResult ChangeStock([FromQuery] int id, int stock)
         {
-            var item = _userService.GetUserItem(id).Result;
+            var logged = bool.Parse(HttpContext.Request.HttpContext.Session.GetString("UserLogged") ?? "false");
+            if (!logged)
+            {
+                ModelState.AddModelError("User", "User is not login!");
+                return BadRequest(new ValidationProblemDetails());
+            }
+                var item = _userService.GetUserItem(id).Result;
             if(item == null){
                 return NotFound();
             }
